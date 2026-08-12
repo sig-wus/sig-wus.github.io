@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIG-WUS: Wearable Ultrasound</title>
+<meta name="description" content="A community effort exploring a Special Interest Group in wearable ultrasound. Structure, news, and contact.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta property="og:title" content="SIG-WUS: Wearable Ultrasound">
+<meta property="og:description" content="A community effort exploring a Special Interest Group in wearable ultrasound.">
+<meta property="og:url" content="https://sig-wus.github.io/">
+<meta property="og:image" content="https://sig-wus.github.io/assets/og-card.png">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    /* single committed theme: soft blue-gray paper, a middle ground
+       between stark white and a dark mode (which this site does not use) */
+    --bg: #E7EEF4;
+    --ink: #1A2E40;
+    --muted: #51677A;
+    --line: #C9D8E3;
+    --card: #FFFFFF;
+    --accent: #00629B;
+    --accent-hover: #014E7C;
+    --accent-ink: #FFFFFF;
+    --mark-skin: #013A5E;
+    --mark-patch: #00629B;
+    --mark-tick: #F2F8FB;
+    --mark-w1: #00629B;
+    --mark-w2: #4A9BC7;
+    --mark-w3: #8FC3DE;
+    --platform-bg: #DBE8F2;
+    --platform-ink: #1A2E40;
+    --platform-line: #1D5CA8;
+    --wm-name: #013A5E;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover, a:focus-visible { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 22px; }
+
+  header.site { border-bottom: 1px solid var(--line); }
+  .site-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: 16px 0; }
+  .lockup { display: flex; align-items: center; gap: 12px; }
+  .lockup svg { width: 46px; height: 46px; flex: none; }
+  .wm-name { font-size: 21px; font-weight: 700; letter-spacing: 0.4px; line-height: 1.1; color: var(--wm-name); white-space: nowrap; }
+  .wm-sub { font-size: 10.5px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+  .site-links { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 14.5px; font-weight: 600; }
+
+  .hero { padding: 52px 0 40px; }
+  .eyebrow { font-size: 12px; letter-spacing: 2.2px; text-transform: uppercase; color: var(--accent); font-weight: 650; margin: 0 0 10px; }
+  h1 { font-size: clamp(27px, 4.4vw, 40px); font-weight: 700; letter-spacing: -0.5px; line-height: 1.15; margin: 0 0 16px; max-width: 21ch; text-wrap: balance; }
+  .lede { font-size: 17px; max-width: 62ch; margin: 0; color: var(--muted); }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 30px; }
+  .cta { display: inline-block; background: var(--accent); color: var(--accent-ink); font-weight: 650; font-size: 16px;
+         padding: 13px 30px; border-radius: 11px; }
+  .cta:hover, .cta:focus-visible { background: var(--accent-hover); text-decoration: none; }
+
+  section.block { padding: 40px 0 8px; }
+  h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; margin: 0 0 20px; }
+
+  .org { display: flex; flex-direction: column; gap: 12px; }
+  .gov { background: #143E70; color: #FFFFFF; border-radius: 13px; padding: 18px 24px; text-align: center; }
+  .gov-title { font-size: 19px; font-weight: 700; letter-spacing: 0.2px; }
+  .wgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 760px) { .wgs { grid-template-columns: 1fr; } }
+  .wg { border-radius: 13px; padding: 18px 20px; color: #FFFFFF; }
+  .wg.wg1 { background: #1D5CA8; }
+  .wg.wg2 { background: #14707A; }
+  .wg.wg3 { background: #8A6D1A; }
+  .wg-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; border: 1.5px solid rgba(255,255,255,0.75); border-radius: 7px; padding: 2px 9px; margin-bottom: 10px; }
+  .wg-title { font-size: 16.5px; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
+  .wg ul { margin: 0; padding: 0; list-style: none; font-size: 13.5px; opacity: 0.92; }
+  .wg li { padding: 1.5px 0; }
+  .platform { border: 2.5px dashed var(--platform-line); background: var(--platform-bg); color: var(--platform-ink); border-radius: 13px; padding: 16px 24px; text-align: center; }
+  .platform-title { font-size: 16.5px; font-weight: 700; }
+  .platform-sub { font-size: 13.5px; opacity: 0.85; margin-top: 2px; }
+
+  .news { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .news li { display: grid; grid-template-columns: 130px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line); }
+  .news li:last-child { border-bottom: 1px solid var(--line); }
+  @media (max-width: 560px) { .news li { grid-template-columns: 1fr; gap: 4px; } }
+  .news-date { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .news-flag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px; padding: 1px 7px; margin-left: 8px; vertical-align: 2px; }
+  .news-title { font-size: 16px; font-weight: 650; }
+  .news-body { font-size: 14.5px; color: var(--muted); margin-top: 2px; max-width: 70ch; }
+
+  .contacts { display: grid; grid-template-columns: 1fr; max-width: 420px; }
+  .contact { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; font-size: 15px; }
+  .contact .who { font-weight: 650; }
+  .contact .aff { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+
+  footer.site { margin-top: 56px; border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: 13.5px; color: var(--muted); }
+  footer .disclaimer { max-width: 78ch; margin: 0 0 12px; }
+  footer .row { display: flex; gap: 20px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-inner">
+    <div class="lockup">
+      <svg viewBox="0 0 512 512" aria-hidden="true">
+        <path d="M 36 300 Q 256 180 476 300" fill="none" stroke="var(--mark-skin)" stroke-width="22" stroke-linecap="round"/>
+        <rect x="192" y="166" width="128" height="72" rx="20" fill="var(--mark-patch)"/>
+        <rect x="216" y="212" width="12" height="16" rx="3" fill="var(--mark-tick)"/>
+        <rect x="240" y="212" width="12" height="16" rx="3" fill="var(--mark-tick)"/>
+        <rect x="264" y="212" width="12" height="16" rx="3" fill="var(--mark-tick)"/>
+        <rect x="288" y="212" width="12" height="16" rx="3" fill="var(--mark-tick)"/>
+        <path d="M 321.5 295.9 A 80 80 0 0 1 190.5 295.9" fill="none" stroke="var(--mark-w1)" stroke-width="16" stroke-linecap="round"/>
+        <path d="M 362.5 324.6 A 130 130 0 0 1 149.5 324.6" fill="none" stroke="var(--mark-w2)" stroke-width="14" stroke-linecap="round"/>
+        <path d="M 403.4 353.2 A 180 180 0 0 1 108.6 353.2" fill="none" stroke="var(--mark-w3)" stroke-width="12" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="wm-name">SIG-WUS</div>
+        <div class="wm-sub">Wearable Ultrasound</div>
+      </div>
+    </div>
+    <nav class="site-links" aria-label="Site">
+      <a href="#structure">Structure</a>
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
+      <a href="https://github.com/sig-wus">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">Community initiative</p>
+    <h1>Toward a Special Interest Group on Wearable Ultrasound</h1>
+    <p class="lede"><strong>SIG-WUS</strong> is a community effort exploring a Special Interest Group in wearable ultrasound: researchers, clinicians, and industry working toward shared standards, events, education, and open exchange.</p>
+    <!-- SIGNUP: replace the href below with the sign-up form URL once it exists -->
+    <div class="cta-row">
+      <a class="cta" href="mailto:contact@sig-wus.org?subject=SIG-WUS%20community%20sign-up">Join the community</a>
+    </div>
+  </section>
+
+  <section class="block" id="structure">
+    <h2>Structure</h2>
+    <div class="org">
+      <div class="gov">
+        <div class="gov-title">SIG Wearable Ultrasound</div>
+      </div>
+      <div class="wgs">
+        <div class="wg wg1">
+          <span class="wg-tag">WG1</span>
+          <div class="wg-title">Standards &amp; Regulatory Affairs</div>
+          <ul>
+            <li>White paper</li>
+            <li>Safety guidelines</li>
+            <li>IEC / FDA / IEEE SA liaison</li>
+          </ul>
+        </div>
+        <div class="wg wg2">
+          <span class="wg-tag">WG2</span>
+          <div class="wg-title">Events &amp; Education</div>
+          <ul>
+            <li>IUS special sessions</li>
+            <li>Courses, summer school, YP</li>
+            <li>Dresden 2027 (project)</li>
+          </ul>
+        </div>
+        <div class="wg wg3">
+          <span class="wg-tag">WG3</span>
+          <div class="wg-title">Industry &amp; Clinical Translation</div>
+          <ul>
+            <li>Industry liaison</li>
+            <li>Startup &amp; product showcase</li>
+            <li>Clinical adoption pathways</li>
+          </ul>
+        </div>
+      </div>
+      <div class="platform">
+        <div class="platform-title">Open Exchange Platform</div>
+        <div class="platform-sub">Shared cross-WG project: open hardware &amp; software, reference designs, datasets, benchmarking</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="news">
+    <h2>News</h2>
+    <!--
+      HOW TO UPDATE NEWS
+      Copy one <li> block, fill in date / title / text, and place it at the TOP of the list.
+      Keep at most 5 entries; delete the oldest. Use the "upcoming" flag only for future events.
+      Template:
+      <li>
+        <div class="news-date">Mon DD, YYYY</div>
+        <div>
+          <div class="news-title">Title<span class="news-flag">upcoming</span></div>
+          <p class="news-body">One or two sentences. <a href="URL">Link</a>.</p>
+        </div>
+      </li>
+    -->
+    <ul class="news">
+      <li>
+        <div class="news-date">2027</div>
+        <div>
+          <div class="news-title">Wearable ultrasound conference, Dresden<span class="news-flag">planned</span></div>
+          <p class="news-body">A dedicated conference in Dresden, Germany is in planning as a project of the Events &amp; Education working group.</p>
+        </div>
+      </li>
+      <li>
+        <div class="news-date">Jul 2026</div>
+        <div>
+          <div class="news-title">Community survey: 87 supporters</div>
+          <p class="news-body">The open survey started at CEEUS 2026 closed its first round: 87 verified supporters from 15 countries and 67 organizations, including 30 PIs and team leaders and 14 industry supporters.</p>
+        </div>
+      </li>
+      <li>
+        <div class="news-date">Jun 22&#8211;24, 2026</div>
+        <div>
+          <div class="news-title">Initiative launched at IEEE CEEUS 2026</div>
+          <p class="news-body">The SIG initiative was presented at the 1st IEEE Central and Eastern European Ultrasonics Symposium in Warsaw, where the community survey opened. <a href="https://lab4us.github.io/ceeus-2026/">CEEUS 2026</a>.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="block" id="contact">
+    <h2>Contact</h2>
+    <div class="contacts">
+      <div class="contact">
+        <div class="who">SIG-WUS</div>
+        <div class="aff">Steering group</div>
+        <a href="mailto:contact@sig-wus.org">contact@sig-wus.org</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p class="disclaimer">SIG-WUS is a community initiative.</p>
+    <div class="row">
+      <span>&#169; 2026 SIG-WUS community</span>
+      <a href="https://github.com/sig-wus">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

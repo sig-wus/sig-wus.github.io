@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="SIG-WUS">
+  <style>
+    .skin { stroke: #013A5E; }
+    .patch { fill: #00629B; }
+    .w1 { stroke: #00629B; }
+    .w2 { stroke: #4A9BC7; }
+    @media (prefers-color-scheme: dark) {
+      .skin { stroke: #E8F1F8; }
+      .patch { fill: #5FA8D3; }
+      .w1 { stroke: #5FA8D3; }
+      .w2 { stroke: #8FC3DE; }
+    }
+  </style>
+  <path class="skin" d="M 26 310 Q 256 170 486 310" fill="none" stroke-width="30" stroke-linecap="round"/>
+  <rect class="patch" x="176" y="138" width="160" height="92" rx="26"/>
+  <path class="w1" d="M 342.0 312.2 A 105 105 0 0 1 170.0 312.2" fill="none" stroke-width="28" stroke-linecap="round"/>
+  <path class="w2" d="M 399.4 352.4 A 175 175 0 0 1 112.6 352.4" fill="none" stroke-width="24" stroke-linecap="round"/>
+</svg>
