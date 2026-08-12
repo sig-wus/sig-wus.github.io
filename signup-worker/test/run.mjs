@@ -97,6 +97,14 @@ check('single: consent evidence stored',
   /203\.0\.113\.9/.test(call.body.fields['consent-source']), JSON.stringify(call.body.fields));
 check('single: token sent as bearer', call.auth === 'Bearer test-token');
 
+/* 1b. notify mail (regression: renamed variable had broken this path) ----- */
+apiCalls = []; globalThis.__mails.length = 0;
+res = await post(GOOD, { NOTIFY_EMAIL: 'contact@sig-wus.org' });
+check('single: notify mail sent with areas list',
+  res.status === 200 && globalThis.__mails.length === 1 &&
+  /Areas: Standards & Regulatory, Open Exchange Platform/.test(globalThis.__mails[0].text),
+  globalThis.__mails[0] && globalThis.__mails[0].text);
+
 /* 2. honeypot ------------------------------------------------------------- */
 apiCalls = [];
 res = await post({ ...GOOD, website: 'http://spam.example' });

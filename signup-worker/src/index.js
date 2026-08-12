@@ -248,7 +248,7 @@ async function notifyManager(env, sub, areas, consentMs) {
       `New SIG-WUS sign-up: ${sub.firstname} ${sub.lastname}`,
       `${sub.firstname} ${sub.lastname} <${sub.email}>\n` +
         `${sub.affiliation}, ${sub.country}\n` +
-        `Groups: ${groups.join(', ')}\n` +
+        `Areas: ${areas.join(', ')}\n` +
         `Consent: ${new Date(consentMs).toISOString()}\n`,
       null
     );
