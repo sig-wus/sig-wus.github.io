@@ -23,9 +23,7 @@ WELCOME_MAIL = "1"
 IK_DOMAIN_ID   = "64876"
 
 # --- site / routing ---------------------------------------------------------
-# Switch back to https://sig-wus.org once the domain's A records point at GitHub Pages;
-# until then that host does not resolve and links/redirects would dead-end.
-SITE_URL        = "https://sig-wus.github.io"
+SITE_URL        = "https://sig-wus.org"
 ALLOWED_ORIGINS = "https://sig-wus.org,https://www.sig-wus.org,https://sig-wus.github.io"
 # Public URL of THIS worker (used to build the confirmation link).
 # Update after the first deploy, or point a custom route like https://api.sig-wus.org at it.
