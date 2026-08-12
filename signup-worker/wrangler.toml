@@ -1,0 +1,47 @@
+name = "sig-wus-signup"
+main = "src/index.js"
+compatibility_date = "2026-08-01"
+# nodejs_compat is required by worker-mailer (SMTP over TCP sockets)
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# --- opt-in behaviour -------------------------------------------------------
+#   "single" : submit -> subscriber is created immediately, no inbox round-trip.
+#              Fastest for the visitor. Consent (time, IP, form) is stored in the
+#              subscriber fields as evidence.
+#   "double" : submit -> confirmation link is mailed; the subscriber is only
+#              created when that link is clicked. Strongest proof of consent,
+#              safest for German recipients, costs you ~20-30 % of sign-ups.
+OPT_IN_MODE  = "single"
+# Send a short welcome mail in single mode (also gives a "this was not me" exit).
+# Set to "0" and clear NOTIFY_EMAIL to run without any SMTP configuration at all.
+WELCOME_MAIL = "1"
+
+# --- Infomaniak -------------------------------------------------------------
+# Numeric domain id of the newsletter. 64876 is the id in your panel URL
+# (newsletter.infomaniak.com/v3/64876/...). Verify with:  python tools/ik_newsletter.py domains
+IK_DOMAIN_ID   = "64876"
+
+# --- site / routing ---------------------------------------------------------
+# Switch back to https://sig-wus.org once the domain's A records point at GitHub Pages;
+# until then that host does not resolve and links/redirects would dead-end.
+SITE_URL        = "https://sig-wus.github.io"
+ALLOWED_ORIGINS = "https://sig-wus.org,https://www.sig-wus.org,https://sig-wus.github.io"
+# Public URL of THIS worker (used to build the confirmation link).
+# Update after the first deploy, or point a custom route like https://api.sig-wus.org at it.
+PUBLIC_URL      = "https://sig-wus-signup.sig-wus.workers.dev"
+
+# --- outgoing mail (Infomaniak SMTP) ----------------------------------------
+SMTP_HOST    = "mail.infomaniak.com"
+SMTP_PORT    = "587"
+SMTP_USER    = "contact@sig-wus.org"
+FROM_EMAIL   = "contact@sig-wus.org"
+FROM_NAME    = "SIG-WUS"
+# Set to "" to disable the per-sign-up notification mail.
+NOTIFY_EMAIL = "contact@sig-wus.org"
+
+# --- secrets (NOT here -- set with `wrangler secret put <NAME>`) -------------
+#   IK_TOKEN          Infomaniak API token, newsletter scope
+#   HMAC_SECRET       random 32+ byte string, e.g. `openssl rand -base64 48`
+#   SMTP_PASS         mailbox or application password for SMTP_USER
+#   TURNSTILE_SECRET  optional; bot check is skipped when unset

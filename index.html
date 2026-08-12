@@ -105,7 +105,47 @@
   footer.site { margin-top: 56px; border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: 13.5px; color: var(--muted); }
   footer .disclaimer { max-width: 78ch; margin: 0 0 12px; }
   footer .row { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  /* ---- Sign-up modal ------------------------------------------------------
+     Markup lives near the bottom of <body> in <dialog id="join">.
+     Without JavaScript the dialog is shown inline by the :target rule at the
+     end of this block, so the "Join the community" link keeps working. ---- */
+  dialog.join { border: none; padding: 0; background: transparent; width: min(560px, calc(100% - 28px)); }
+  dialog.join::backdrop { background: rgba(9, 26, 40, 0.55); }
+  .join-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+               padding: 24px 26px 22px; max-height: 88vh; overflow-y: auto; color: var(--ink); }
+  .join-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+  .join-head h2 { margin: 0 0 6px; }
+  .join-sub { font-size: 14px; color: var(--muted); margin: 0 0 18px; max-width: 54ch; }
+  .join-close { flex: none; border: none; background: transparent; color: var(--muted); cursor: pointer;
+                font-size: 24px; line-height: 1; padding: 2px 8px 6px; border-radius: 8px; }
+  .join-close:hover { color: var(--ink); background: var(--bg); }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; font-weight: 650; margin-bottom: 5px; }
+  .field input { width: 100%; font: inherit; font-size: 15px; padding: 10px 12px; background: #FFFFFF;
+                 border: 1px solid var(--line); border-radius: 9px; color: var(--ink); }
+  .field input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+  @media (max-width: 520px) { .grid2 { grid-template-columns: 1fr; } }
+  fieldset.wg-pick { border: 1px solid var(--line); border-radius: 11px; padding: 12px 14px 6px; margin: 2px 0 14px; }
+  fieldset.wg-pick legend { font-size: 13px; font-weight: 650; padding: 0 6px; }
+  .check { display: flex; align-items: flex-start; gap: 9px; font-size: 14px; margin-bottom: 9px; }
+  .check input { flex: none; width: 16px; height: 16px; margin-top: 3px; accent-color: var(--accent); }
+  .check .hint { display: block; font-size: 12.5px; color: var(--muted); }
+  .consent { font-size: 13px; color: var(--muted); }
+  .join-actions { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
+  .join-actions .cta { border: none; cursor: pointer; font-family: inherit; }
+  .join-actions .cta[disabled] { opacity: 0.55; cursor: progress; }
+  .join-status { font-size: 14px; margin: 14px 0 0; }
+  .join-status.ok { color: #14707A; font-weight: 600; }
+  .join-status.err { color: #8A2020; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .banner { background: #DDEEE7; border: 1px solid #9AC7B7; color: #14563F; border-radius: 11px;
+            padding: 12px 16px; margin: 22px 0 0; font-size: 14.5px; }
+  html:not(.js) dialog.join:target { display: block; position: static; margin: 26px auto 0; }
+  html:not(.js) .join-close { display: none; }
 </style>
+<script>document.documentElement.className += " js";</script>
 </head>
 <body>
 
@@ -143,10 +183,12 @@
     <p class="eyebrow">Community initiative</p>
     <h1>Toward a Special Interest Group (SIG) on Wearable Ultrasound</h1>
     <p class="lede"><strong>SIG-WUS</strong> is a community effort exploring a Special Interest Group in wearable ultrasound: researchers, clinicians, and industry working toward shared standards, events, education, and open exchange.</p>
-    <!-- SIGNUP: replace the href below with the sign-up form URL once it exists -->
+    <!-- SIGNUP: opens the modal in <dialog id="join"> at the bottom of this file.
+         Without JavaScript the same link jumps to the form rendered inline. -->
     <div class="cta-row">
-      <a class="cta" href="mailto:contact@sig-wus.org?subject=SIG-WUS%20community%20sign-up">Join the community</a>
+      <a class="cta" href="#join" data-join>Join the community</a>
     </div>
+    <div id="join-banner" hidden></div>
   </section>
 
   <section class="block" id="structure">
@@ -253,6 +295,172 @@
     </div>
   </div>
 </footer>
+
+<!-- ======================= SIGN-UP MODAL ===================================
+  Posts to the sig-wus-signup Cloudflare Worker, which validates and writes
+  the subscriber to the Infomaniak newsletter (single opt-in; the Worker's
+  OPT_IN_MODE variable switches to a mailed confirmation link if needed).
+  The form's action attribute must point at the deployed Worker URL.
+========================================================================== -->
+<dialog class="join" id="join" aria-labelledby="join-title">
+  <div class="join-card">
+    <div class="join-head">
+      <div>
+        <h2 id="join-title">Join the community</h2>
+        <p class="join-sub">Occasional updates on working groups, events, standards drafts and the Dresden conference. A few mails per year, nothing else.</p>
+      </div>
+      <button class="join-close" id="join-close" type="button" aria-label="Close">&times;</button>
+    </div>
+
+    <!-- TODO: replace the host below with your deployed Worker URL. This is the
+         only place it has to be configured: the script reads form.action. -->
+    <form id="join-form" method="post"
+          action="https://sig-wus-signup.sig-wus.workers.dev/subscribe">
+      <div class="field">
+        <label for="j-email">E-mail address</label>
+        <input id="j-email" name="email" type="email" required autocomplete="email" maxlength="150">
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="j-first">First name</label>
+          <input id="j-first" name="firstname" type="text" required autocomplete="given-name" maxlength="80">
+        </div>
+        <div class="field">
+          <label for="j-last">Last name</label>
+          <input id="j-last" name="lastname" type="text" required autocomplete="family-name" maxlength="80">
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="field">
+          <label for="j-aff">Affiliation</label>
+          <input id="j-aff" name="affiliation" type="text" required autocomplete="organization" maxlength="150">
+        </div>
+        <div class="field">
+          <label for="j-country">Country</label>
+          <input id="j-country" name="country" type="text" required autocomplete="country-name" maxlength="60">
+        </div>
+      </div>
+
+      <fieldset class="wg-pick">
+        <legend>Areas you are interested in (optional)</legend>
+        <label class="check"><input type="checkbox" name="groups" value="EVENTS">
+          <span>Events &amp; Education<span class="hint">IUS special sessions, courses, summer school, Dresden 2027</span></span></label>
+        <label class="check"><input type="checkbox" name="groups" value="INDUSTRY">
+          <span>Industry &amp; Clinical Translation<span class="hint">Industry liaison, showcase, clinical adoption pathways</span></span></label>
+        <label class="check"><input type="checkbox" name="groups" value="STANDARDS">
+          <span>Standards &amp; Regulatory<span class="hint">White paper, safety guidelines, IEC / FDA / IEEE SA liaison</span></span></label>
+        <label class="check"><input type="checkbox" name="groups" value="PLATFORM">
+          <span>Exchange Platform<span class="hint">Open hardware &amp; software, reference designs, datasets, benchmarking</span></span></label>
+      </fieldset>
+
+      <label class="check consent">
+        <input type="checkbox" name="consent" value="yes" required>
+        <span>I would like to receive e-mails from SIG-WUS and I can unsubscribe at any time via the link in every message.</span>
+      </label>
+
+      <!-- spam trap: hidden from humans, filled in by most bots -->
+      <div class="hp" aria-hidden="true">
+        <label for="j-website">Leave this field empty</label>
+        <input id="j-website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="join-actions">
+        <button class="cta" id="join-submit" type="submit">Join the community</button>
+      </div>
+    </form>
+
+    <p class="join-status" id="join-status" role="status" aria-live="polite"></p>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  var dlg    = document.getElementById("join");
+  var form   = document.getElementById("join-form");
+  var status = document.getElementById("join-status");
+  var submit = document.getElementById("join-submit");
+  var supportsModal = typeof dlg.showModal === "function";
+
+  function say(msg, kind) {
+    status.textContent = msg;
+    status.className = "join-status" + (kind ? " " + kind : "");
+  }
+
+  function openModal(ev) {
+    if (!supportsModal) { return; }          /* very old browser: follow #join */
+    if (ev) { ev.preventDefault(); }
+    if (!dlg.open) { dlg.showModal(); }
+    document.getElementById("j-email").focus();
+  }
+
+  var triggers = document.querySelectorAll("[data-join]");
+  for (var i = 0; i < triggers.length; i++) { triggers[i].addEventListener("click", openModal); }
+  document.getElementById("join-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) { dlg.close(); } });
+  if (window.location.hash === "#join") { openModal(); }
+
+  /* ---- submit ----------------------------------------------------------- */
+  form.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    if (!form.reportValidity()) { return; }
+
+    var data = new FormData(form);
+    var groups = [];
+    var picked = form.querySelectorAll("input[name='groups']:checked");
+    for (var i = 0; i < picked.length; i++) { groups.push(picked[i].value); }
+
+    var payload = {
+      email:       String(data.get("email") || "").trim(),
+      firstname:   String(data.get("firstname") || "").trim(),
+      lastname:    String(data.get("lastname") || "").trim(),
+      affiliation: String(data.get("affiliation") || "").trim(),
+      country:     String(data.get("country") || "").trim(),
+      groups:      groups,
+      consent:     form.querySelector("input[name='consent']").checked,
+      website:     String(data.get("website") || "")
+    };
+    var turnstile = form.querySelector("[name='cf-turnstile-response']");
+    if (turnstile) { payload.turnstile = turnstile.value; }
+
+    submit.disabled = true;
+    say("Sending…");
+
+    fetch(form.action, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (body) {
+        return { ok: res.ok, body: body };
+      });
+    }).then(function (res) {
+      if (res.ok) {
+        form.hidden = true;
+        /* the Worker decides the wording: instant sign-up or "check your inbox" */
+        say(res.body.message || "You are on the list. Welcome to SIG-WUS.", "ok");
+      } else {
+        submit.disabled = false;
+        say(res.body.error || "Something went wrong. Please write to contact@sig-wus.org.", "err");
+      }
+    }).catch(function () {
+      submit.disabled = false;
+      say("Network error. Please write to contact@sig-wus.org.", "err");
+    });
+  });
+
+  /* ---- post-confirmation banner (Worker redirects to /?subscribed=1) ---- */
+  if (window.location.search.indexOf("subscribed=1") !== -1) {
+    var banner = document.getElementById("join-banner");
+    banner.className = "banner";
+    banner.textContent = "Thank you — your e-mail address is confirmed and you are on the SIG-WUS list.";
+    banner.hidden = false;
+  }
+}());
+</script>
 
 </body>
 </html>

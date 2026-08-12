@@ -1,0 +1,5 @@
+# Copy to .dev.vars for `wrangler dev`. NEVER commit the real file.
+IK_TOKEN="paste-infomaniak-api-token"
+HMAC_SECRET="paste-output-of: openssl rand -base64 48"
+SMTP_PASS="mailbox-or-application-password"
+TURNSTILE_SECRET=""
