@@ -118,6 +118,8 @@ res = await post({ ...GOOD, consent: false });
 check('validation: missing consent rejected', res.status === 400);
 res = await post({ ...GOOD, firstname: '' });
 check('validation: missing name rejected', res.status === 400);
+res = await post({ ...GOOD, country: 'Atlantis' });
+check('validation: country outside allowlist rejected', res.status === 400 && apiCalls.length === 0);
 
 /* 4. group injection ------------------------------------------------------ */
 apiCalls = [];
