@@ -74,6 +74,7 @@
   .org { display: flex; flex-direction: column; gap: 12px; }
   .gov { background: #143E70; color: #FFFFFF; border-radius: 13px; padding: 18px 24px; text-align: center; }
   .gov-title { font-size: 19px; font-weight: 700; letter-spacing: 0.2px; }
+  .gov-chair { margin-top: 5px; font-size: 13.5px; opacity: 0.95; }
   .wgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   @media (max-width: 760px) { .wgs { grid-template-columns: 1fr; } }
   .wg { border-radius: 13px; padding: 18px 20px; color: #FFFFFF; }
@@ -84,9 +85,17 @@
   .wg-title { font-size: 16.5px; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
   .wg ul { margin: 0; padding: 0; list-style: none; font-size: 13.5px; opacity: 0.92; }
   .wg li { padding: 1.5px 0; }
+  .leads { margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.35); font-size: 13px; line-height: 1.5; }
+  .leads > div { margin-bottom: 7px; }
+  .leads > div:last-child { margin-bottom: 0; }
+  .leads .scope { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; opacity: 0.8; margin-bottom: 1px; }
+  a.lead { color: inherit; white-space: nowrap; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 3px; text-decoration-color: rgba(255,255,255,0.55); }
+  a.lead:hover, a.lead:focus-visible { text-decoration-style: solid; text-decoration-color: currentColor; }
   .platform { border: 2.5px dashed var(--platform-line); background: var(--platform-bg); color: var(--platform-ink); border-radius: 13px; padding: 16px 24px; text-align: center; }
   .platform-title { font-size: 16.5px; font-weight: 700; }
   .platform-sub { font-size: 13.5px; opacity: 0.85; margin-top: 2px; }
+  .platform-lead { margin-top: 7px; font-size: 13.5px; }
+  .platform-lead a.lead { text-decoration-color: rgba(0, 98, 155, 0.5); color: var(--accent); }
 
   .news { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
   .news li { display: grid; grid-template-columns: 130px 1fr; gap: 18px; padding: 16px 0; border-top: 1px solid var(--line); }
@@ -246,6 +255,7 @@
     <div class="org">
       <div class="gov">
         <div class="gov-title">SIG Wearable Ultrasound</div>
+        <div class="gov-chair">Chair: <a class="lead" href="mailto:pchitnis@gmu.edu">Prof. Parag Chitnis (GMU, USA)</a></div>
       </div>
       <div class="wgs">
         <div class="wg wg1">
@@ -256,6 +266,9 @@
             <li>Safety guidelines</li>
             <li>IEC / FDA / IEEE SA liaison</li>
           </ul>
+          <div class="leads">
+            <a class="lead" href="mailto:ssikdar@gmu.edu">Prof. Siddhartha Sikdar (GMU, USA)</a>
+          </div>
         </div>
         <div class="wg wg2">
           <span class="wg-tag">WG2</span>
@@ -265,6 +278,10 @@
             <li>Courses, summer school, YP</li>
             <li>Dresden 2027 (project)</li>
           </ul>
+          <div class="leads">
+            <div><span class="scope">Conference</span> <a class="lead" href="mailto:moritz.herzog@tu-dresden.de">Dr. Moritz Herzog (TUD, Germany)</a></div>
+            <div><span class="scope">Education</span> <a class="lead" href="mailto:christoph.leitner@iis.ee.ethz.ch">Dr. Christoph Leitner (ETH, Switzerland)</a></div>
+          </div>
         </div>
         <div class="wg wg3">
           <span class="wg-tag">WG3</span>
@@ -274,11 +291,16 @@
             <li>Startup &amp; product showcase</li>
             <li>Clinical adoption pathways</li>
           </ul>
+          <div class="leads">
+            <div><span class="scope">Technology</span> <a class="lead" href="mailto:christoph.leitner@iis.ee.ethz.ch">Dr. Christoph Leitner (ETH, Switzerland)</a></div>
+            <div><span class="scope">Clinical</span> <a class="lead" href="mailto:moritz.herzog@tu-dresden.de">Dr. Moritz Herzog (TUD, Germany)</a></div>
+          </div>
         </div>
       </div>
       <div class="platform">
         <div class="platform-title">Open Exchange Platform</div>
         <div class="platform-sub">Shared cross-WG project: open hardware &amp; software, reference designs, datasets, benchmarking</div>
+        <div class="platform-lead"><a class="lead" href="mailto:richard.nauber@tu-dresden.de">Dr. Richard Nauber (TUD, Germany)</a></div>
       </div>
     </div>
   </section>
